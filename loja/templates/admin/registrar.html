@@ -6,15 +6,15 @@
 <div class="container">
     {% from "_formularioajuda.html" import render_field %}
 <form method=post enctype="multipart/form-data">
-  <div>
-    {{ render_field(form.nome) }}
-    {{ render_field(form.usuario) }}
-    {{ render_field(form.email) }}
-    {{ render_field(form.senha) }}
-    {{ render_field(form.confirmacao) }}
-    <input type="file"name="photo">
-  </div>
-  <p><input type=submit value=Registrar class="btn btn-info"></p>
+    <div>
+        {{ render_field(form.name, class="form-control") }}
+        {{ render_field(form.username, class="form-control") }}
+        {{ render_field(form.email, class="form-control") }}
+        {{ render_field(form.password, class="form-control") }}
+   
+        <input type="file"name="Foto">
+    </div>
+    <p><input type=submit value=Registrar class="btn btn-success m-2"></p>
 </form>
 </div>
 
