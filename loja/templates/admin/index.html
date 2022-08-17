@@ -4,4 +4,34 @@
 
 {% include '_messages.html' %}
 
+<div class="container mt-3 ">
+    <table class="table table-sm table-striped ">
+        <thead>
+            <th>Serial</th>
+            <th>Produto</th>
+            <th>Preco</th>
+            <th>Desconto</th>
+            <th>Fabricante</th>
+            <th>Foto</th>
+            <th>Editar</th>
+            <th>Deletar</th>
+        </thead>
+        <tbody> 
+           {% for produto in produtos %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{produto.name}}</td>
+                <td>{{produto.price}}</td>
+                <td>{{produto.discount}} % </td>
+                <td>{{produto.marca.name}}</td>
+                <td><img src="{{url_for('static', filename='images/' + produto.image_1)}}" width="80" height="60"></td>
+                <td><a href="" class="btn btn-sm btn-outline-warning">Editar</a></td>
+                <td><a href="" class="btn btn-sm btn-outline-danger">Deletar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
 {% endblock content %}

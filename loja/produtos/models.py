@@ -15,7 +15,6 @@ class Addproduto(db.Model):
 
     marca_id = db.Column(db.Integer, db.ForeignKey('marcas.id'), nullable=False)
     marca = db.relationship('Marcas',backref=db.backref('marcas', lazy=True))
-
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
     categoria = db.relationship('Categorias',backref=db.backref('categorias', lazy=True))
 
