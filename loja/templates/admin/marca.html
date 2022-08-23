@@ -21,8 +21,36 @@
                 <td>{{marca.name}}</td>
 
                 <td><a href="{{url_for('updatemarcas', id=marca.id)}}" class="btn btn-sm btn-outline-warning">Editar</a></td>
-                <td><a href="" class="btn btn-sm btn-outline-danger">Deletar</a></td>
+                <td>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal-{{marca.id}}">
+  Deletar
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal-{{marca.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{marca.id}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span class="text-alert">DESEJA DELETAR ESSA MARCA: {{marca.id}} ?</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+         <form action="{{url_for('deletemarca', id=marca.id)}}" method="POST">
+        <button type="submit" class="btn btn-danger">Deletar</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+                </td>
             </tr>
+              <!-- Modal das marcas -->
+
             {% endfor %}
             {% else %}
             {% for categoria in categorias %}
@@ -31,8 +59,13 @@
                 <td>{{categoria.name}}</td>
 
                 <td><a href="{{url_for('updatecats', id=categoria.id)}}" class="btn btn-sm btn-outline-warning">Editar</a></td>
-                <td><a href="" class="btn btn-sm btn-outline-danger">Deletar</a></td>
+                <td>
+                    
+                </td>
             </tr>
+  
+ 
+
             {% endfor %}
 
             {% endif %}
