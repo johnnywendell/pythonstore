@@ -51,7 +51,8 @@
              {% if marca.has_prev %}
              <a href="{{url_for('get_marca',id=get_marcas.id,pagina=marca.prev_num)}}" class="btn btn-primary btn-sm mt-3">Anterior</a>
              {% endif%}
-             {% for page_num in marca.iter_pages() %}
+             {% if marca.total > 4 %}
+             {% for page_num in marca.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
              {% if page_num %}
              {% if marca.pagina == page_num %}
              <a href="{{url_for('get_marca',id=get_marcas.id,pagina=page_num)}}" class="btn btn-primary btn-sm mt-3">{{page_num}}</a>
@@ -62,6 +63,7 @@
              ...
              {% endif %}
              {% endfor %}
+             {% endif %}
              {% if marca.has_next %}
              <a href="{{url_for('get_marca',id=get_marcas.id,pagina=marca.next_num)}}" class="btn btn-primary btn-sm mt-3">Proxima</a>
              {% endif%}
@@ -97,7 +99,8 @@
              {% if categoria.has_prev %}
              <a href="{{url_for('get_cat',id=get_categoria.id,pagina=categoria.prev_num)}}" class="btn btn-primary btn-sm mt-3">Anterior</a>
              {% endif%}
-             {% for page_num in categoria.iter_pages() %}
+             {% if categoria.total > 4 %}
+             {% for page_num in categoria.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
              {% if page_num %}
              {% if categoria.pagina == page_num %}
              <a href="{{url_for('get_cat',id=get_categoria.id,pagina=page_num)}}" class="btn btn-primary btn-sm mt-3">{{page_num}}</a>
@@ -108,6 +111,7 @@
              ...
              {% endif %}
              {% endfor %}
+             {% endif %}
              {% if categoria.has_next %}
              <a href="{{url_for('get_cat',id=get_categoria.id,pagina=categoria.next_num)}}" class="btn btn-primary btn-sm mt-3">Proxima</a>
              {% endif%}
@@ -130,7 +134,7 @@
                     <p class="texte-center mb-0">Preço R$ {{produto.price}}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="float-left btn btn-sm btn-success">Detalhes</a>
+                    <a href="{{url_for('pagina_unica', id=produto.id)}}" class="float-left btn btn-sm btn-success">Detalhes</a>
                     <a href="#" class="float-right btn btn-sm btn-warning">+ Carrinho</a>
                 </div>
                 </div>
@@ -140,9 +144,11 @@
             <div class="col">
      
              {% if produtos.has_prev %}
+             
              <a href="{{url_for('home',pagina=produtos.prev_num)}}" class="btn btn-primary btn-sm mt-3">Anterior</a>
              {% endif%}
-             {% for page_num in produtos.iter_pages() %}
+             {% if produtos.total > 4 %}
+             {% for page_num in produtos.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
              {% if page_num %}
              {% if produtos.pagina == page_num %}
              <a href="{{url_for('home',pagina=page_num)}}" class="btn btn-primary btn-sm mt-3">{{page_num}}</a>
@@ -153,6 +159,7 @@
              ...
              {% endif %}
              {% endfor %}
+             {% endif %}
              {% if produtos.has_next %}
              <a href="{{url_for('home',pagina=produtos.next_num)}}" class="btn btn-primary btn-sm mt-3">Proxima</a>
              {% endif%}
