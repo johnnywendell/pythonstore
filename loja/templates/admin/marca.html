@@ -1,0 +1,103 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+
+{% include '_messages.html' %}
+
+<div class="container mt-3 ">
+    <table class="table table-dark table-hover ">
+        <thead>
+            <th>Serial</th>
+            <th>Nome</th>
+
+            <th>Editar</th>
+            <th>Deletar</th>
+        </thead>
+        <tbody> 
+            {% if marcas %}
+           {% for marca in marcas %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{marca.name}}</td>
+
+                <td><a href="{{url_for('updatemarcas', id=marca.id)}}" class="btn btn-sm btn-outline-warning">Editar</a></td>
+                <td>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal-{{marca.id}}">
+  Deletar
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal-{{marca.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{marca.name}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span class="text-alert">DESEJA DELETAR ESSA MARCA: {{marca.name}} ?</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+         <form action="{{url_for('deletemarca', id=marca.id)}}" method="POST">
+        <button type="submit" class="btn btn-danger">Deletar</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+                </td>
+            </tr>
+              <!-- Modal das marcas -->
+
+            {% endfor %}
+            {% else %}
+            {% for categoria in categorias %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{categoria.name}}</td>
+
+                <td><a href="{{url_for('updatecats', id=categoria.id)}}" class="btn btn-sm btn-outline-warning">Editar</a></td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal-{{categoria.id}}">
+                    Deletar
+                  </button>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal-{{categoria.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">{{categoria.name}}</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <span class="text-alert">DESEJA DELETAR ESSA CATEGORIA: {{categoria.name}} ?</span>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                           <form action="{{url_for('deletecat', id=categoria.id)}}" method="POST">
+                          <button type="submit" class="btn btn-danger">Deletar</button>
+                        </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                    
+                </td>
+            </tr>
+  
+ 
+
+            {% endfor %}
+
+            {% endif %}
+
+
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock content %}

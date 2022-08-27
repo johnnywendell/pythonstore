@@ -1,0 +1,23 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+
+<div class="text-center h1 text-success">Registrar</div>
+<div class="container">
+    {% include '_messages.html' %}
+    {% from "_formularioajuda.html" import render_field %}
+<form method=post enctype="multipart/form-data">
+    <div>
+        {{ render_field(form.name, class="form-control") }}
+        {{ render_field(form.username, class="form-control") }}
+        {{ render_field(form.email, class="form-control") }}
+        {{ render_field(form.password, class="form-control") }}
+   
+        <input type="file"name="Foto">
+    </div>
+    <p><input type=submit value=Registrar class="btn btn-success m-2"></p>
+</form>
+</div>
+
+
+{% endblock content %}
