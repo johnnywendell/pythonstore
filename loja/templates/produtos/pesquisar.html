@@ -1,0 +1,70 @@
+{% extends 'layouts.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+    <div class="col-md-2">
+            <a class="btn btn-primary my-3"  href="#" data-bs-toggle="dropdown" aria-expanded="false" >Filtro marcas</a>
+            <ul class="dropdown-menu">
+                {% for marca in marcas %}
+              <li><a class="dropdown-item" href="{{url_for('get_marca', id=marca.id)}}">{{marca.name}}</a></li>
+                {% endfor %}
+            </ul>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-primary my-3"  href="#" data-bs-toggle="dropdown" aria-expanded="false" >Filtro Categorias</a>
+        <ul class="dropdown-menu">
+            {% for categoria in categorias %}
+          <li><a class="dropdown-item" href="{{url_for('get_cat', id=categoria.id)}}">{{categoria.name}}</a></li>
+            {% endfor %}
+        </ul>
+</div>
+</div>
+       
+</div>
+<div class="container">
+<div class="row">
+    {% for produto in produtos %}
+    <div class="col-md-3 mt-3">
+        <div class="card my-2">
+            <img src="{{url_for('static', filename='images/' + produto.image_1)}}" alt="{{produto.name}}" class="card-img-top" height="180">
+            <div class="card-body">
+                {% if produto.discount > 0 %}
+                <h5 style="text-shadow: 1px 2px 3px ; position:absolute"> Desconto {{produto.discount}} %</h5>
+                {% endif %}
+                <h4 class="texte-center mt-4">{{produto.name}}</h4>
+                <p class="texte-center mb-0">Preço R$ {{produto.price}}</p>
+            </div>
+            <div class="card-footer m-0">
+                <div class="row m-0 p-0">
+                <div class="col-md-6">
+                <a href="{{url_for('pagina_unica', id=produto.id)}}" class="float-left btn btn-sm btn-success">Detalhes</a>
+            </div>
+                <div class="col-md-6">
+                <form action="{{url_for('addCart')}}" method="post">
+                    <input type="hidden" name="produto_id" value="{{produto.id}}">
+                    <button type="submit" class="float-right btn btn-sm btn-warning"> + Carrinho</button>
+
+                    <input type="hidden" name="quantity" id="" value="1" min="1" max="{{produto.stock}}">
+                    {% set colors = produto.colors.split(',') %}
+         
+                    <select name="colors" id="colors" style="visibility: hidden">
+                        {% for color in colors %}
+                        {% set col = color.split(':') %}
+                        <option value="{{col[0]}}">{{col[0]|capitalize}}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+            </div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+</div> 
+
+
+{% endblock content %}

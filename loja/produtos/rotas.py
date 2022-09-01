@@ -5,22 +5,37 @@ from .forms import Addprodutos
 import secrets, os
 
 ################   views   ################
+
+def marcas():
+    marcas = Marcas.query.join(Addproduto, (Marcas.id == Addproduto.marca_id)).all()
+    return marcas
+def categorias():
+    categorias = Categorias.query.join(Addproduto, (Categorias.id == Addproduto.categoria_id)).all()
+    return categorias
+
 @app.route('/')
 def home():
     pagina = request.args.get('pagina',1, type=int)
     produtos = Addproduto.query.filter(Addproduto.stock > 0).order_by(Addproduto.id.desc()).paginate(page=pagina, per_page=4)
-    marcas = Marcas.query.join(Addproduto, (Marcas.id == Addproduto.marca_id)).all()
-    categorias = Categorias.query.join(Addproduto, (Categorias.id == Addproduto.categoria_id)).all()
-    return render_template('produtos/index.html', produtos=produtos, marcas=marcas, categorias=categorias)
+    return render_template('produtos/index.html', produtos=produtos, marcas=marcas(), categorias=categorias())
+
+@app.route('/search', methods=['GET','POST'])
+def search():
+    if request.method == "POST":
+        form = request.form
+        search_value = form['search_string']
+        search="%{0}%".format(search_value)
+        produtos = Addproduto.query.filter(Addproduto.name.like(search)).all()
+        return render_template('produtos/pesquisar.html', produtos=produtos, categorias=categorias(), marcas=marcas())
+    else:
+        return redirect('/')
 
 @app.route('/get_marca/<int:id>')
 def get_marca(id):
     pagina = request.args.get('pagina',1, type=int)
     get_marcas = Marcas.query.filter_by(id=id).first_or_404()
     marca = Addproduto.query.filter_by(marca=get_marcas).paginate(page=pagina, per_page=4)
-    marcas = Marcas.query.join(Addproduto, (Marcas.id == Addproduto.marca_id)).all()
-    categorias = Categorias.query.join(Addproduto, (Categorias.id == Addproduto.categoria_id)).all()
-    return render_template('produtos/index.html', marca=marca, marcas=marcas, categorias= categorias, get_marcas=get_marcas)
+    return render_template('produtos/index.html', marca=marca, marcas=marcas(), categorias= categorias(), get_marcas=get_marcas)
     
 
 @app.route('/get_cat/<int:id>')
@@ -28,9 +43,7 @@ def get_cat(id):
     pagina = request.args.get('pagina',1, type=int)
     get_categoria = Categorias.query.filter_by(id=id).first_or_404()
     categoria = Addproduto.query.filter_by(categoria=get_categoria).paginate(page=pagina, per_page=4)
-    categorias = Categorias.query.join(Addproduto, (Categorias.id == Addproduto.categoria_id)).all()
-    marcas = Marcas.query.join(Addproduto, (Marcas.id == Addproduto.marca_id)).all()
-    return render_template('produtos/index.html.html', categoria=categoria, marcas=marcas, categorias=categorias, get_categoria=get_categoria)
+    return render_template('produtos/index.html', categoria=categoria, marcas=marcas(), categorias=categorias(), get_categoria=get_categoria)
 
 @app.route('/produto_unica/<int:id>')
 def pagina_unica(id):

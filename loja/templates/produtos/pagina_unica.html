@@ -7,7 +7,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-7" id="m_image">
-            <img src="{{url_for('static', filename='images/' + produto.image_1)}}" alt="{{produto.name}}" height="400">
+            <img src="{{url_for('static', filename='images/' + produto.image_1)}}" class="mw-100" alt="Max-width 100%" height="400">
         </div>
 
     <div class="col-md-5 text-light">
@@ -60,7 +60,7 @@
 
     function full_image(){
         var ImageSRC = this.getAttribute('src');
-        m_image.innerHTML = "<img src=" + ImageSRC + " alt='{{produto.name}}' height='400'>";
+        m_image.innerHTML = "<img src=" + ImageSRC + " class='mw-100' alt='Max-width 100%' height='400'>";
     }
 </script>
 
