@@ -57,7 +57,7 @@
         </table>
         <div class="row text-light">
             <div class="col-md-12">
-            <td><a href="/" class="btn btn-sm btn-outline-success float-left">Processar compra</a></td>
+            <td><a href="{{url_for('pedido_order')}}" class="btn btn-sm btn-outline-success float-left">Processar compra</a></td>
             <label class="mx-5">Imposto:&nbsp; R$ {{imposto}} </label>
             <label >Valor a Total:&nbsp; R$ {{valorpagar}}</label>
             <td><a href="{{url_for('limparcarro')}}" class="btn btn-sm btn-outline-danger float-right mx-5">Limpar carrinho</a></td>

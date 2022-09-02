@@ -3,10 +3,11 @@
 {% block content %}
 
 <div class="text-center h1 text-success">Registrar</div>
-<div class="container">
+<div class="container text-light">
     {% include '_messages.html' %}
     {% from "_formularioajuda.html" import render_field %}
 <form method=post enctype="multipart/form-data">
+    {{ form.csrf_token }}
     <div>
         {{ render_field(form.name, class="form-control") }}
         {{ render_field(form.username, class="form-control") }}

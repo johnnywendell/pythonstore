@@ -1,0 +1,80 @@
+{% extends 'layouts.html' %}
+
+{% block content %}
+{% include '_messages.html' %}
+
+ <div class="container mt-4">
+    <div class="row ">
+        <div class="col-md-12 text-light my-2">
+            Numero do pedido: {{pedidos.notafiscal}}
+            <br>
+            Status: {{pedidos.status}}
+            <br>
+            Nome do Cliente: {{cliente.name}}
+            <br>
+            Email do Cliente: {{cliente.email}}
+            <br>
+            Telefone do Cliente: {{cliente.contact}}
+            <br>
+            <br>
+            <br>
+        
+        <table class="table table-sm text-light align-middle">
+            <thead>
+                <th>Codigo</th>
+                <th>Nome</th>
+                <th>Cor</th>
+                <th>Preco</th>
+                <th>Quantidade</th>
+                <th>Disconto</th>
+                <th>Subtotal</th>
+            </thead>
+            <tbody>
+                {% for key , produto in pedidos.pedido.items() %}
+                {% set discount = "%0.2f" | format(produto.Desconto/100)|float * produto.Preco|float * produto.Quantidade|int %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{produto.Nome}}</td>
+                    
+                        <td>
+                            {{produto.Cor|capitalize}}
+                        </td>
+                        <td>R$ {{produto.Preco}}</td>
+                        <td>{{produto.Quantidade}}</td>
+                        {% if produto.Desconto > 0 %}
+                        <td>{{produto.Desconto}} % &nbsp; = {{discount}}</td>
+                        {% else %}
+                        <td></td>
+                        {% endif %}
+                        {% set subtotal = produto.Quantidade|int * produto.Preco|float %}
+                        <td>R$ {{"%0.2f"|format((subtotal|float) - (discount|float))}}</td>
+                    
+                </tr>
+                {% endfor %}
+               
+            </tbody>
+
+        </table>
+        <div class="row text-light">
+            <div class="col-md-9 my-3">
+            <td><a href="" class="btn btn-sm btn-outline-success float-left">Processar compra</a></td>
+            <label class="mx-5">Imposto:&nbsp; R$ {{imposto}} </label>
+            <label >Valor a Total:&nbsp; R$ {{gTotal}}</label>
+        </div>
+        <div class="col-md-3 my-3">
+            <td>
+                <form action="{{url_for('get_pdf', notafiscal=pedidos.notafiscal)}}" method="post">
+                <button type="submit" class="btn btn-sm btn-warning"> Gerar PDF</button>
+            </form>
+            </td>
+        </div>
+        
+   
+    </div>
+    </div>
+</div>
+ </div>
+
+
+
+{% endblock %}

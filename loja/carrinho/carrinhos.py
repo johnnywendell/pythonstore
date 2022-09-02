@@ -23,7 +23,7 @@ def addCart():
         produto = Addproduto.query.filter_by(id=produto_id).first()   
         if produto_id and quantity and colors and request.method == "POST":
             DicItems = {produto_id:{'Nome':produto.name, 'Preco': produto.price, 'Desconto': produto.discount, 'Cor': colors,
-            'Quantidade':quantity, 'image':produto.image_1, 'colors':produto.colors}}
+            'Quantidade':int(quantity), 'image':produto.image_1, 'colors':produto.colors}}
             if 'LojainCarrinho' in session:
                 print(session['LojainCarrinho'])
                 if produto_id in session['LojainCarrinho']:
@@ -31,7 +31,7 @@ def addCart():
                         for key, item in session['LojainCarrinho'].items():
                             if int(key) == int(produto_id):
                                 session.modified = True
-                                item['quantity']=+1
+                                item['Quantidade']+=1
                 else:
                     session['LojainCarrinho'] = m_dicionarios(session['LojainCarrinho'],DicItems)
                     return redirect(request.referrer)

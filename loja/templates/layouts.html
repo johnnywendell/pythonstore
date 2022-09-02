@@ -34,6 +34,23 @@
                     <li><a class="dropdown-item" href="{{url_for('addcat')}}">Categorias</a></li>
                   </ul>
                 </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link text-success" href="#">{{current_user.name}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('clienteLogout')}}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('cadastrar_clientes')}}">Cadastrar</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('clienteLogin')}}">Login</a>
+                </li>
+
+                {% endif %}
                 <li class="nav-item">
                   <a class="nav-link" href="{{url_for('getcart')}}"tabindex="-1">Carrinho({{(session['LojainCarrinho']|length)}})</a>
                 </li>
@@ -43,8 +60,14 @@
                 <button class="btn btn-outline-success" type="submit" formaction="/search" value="Pesquisar">Search</button>
               </form>
               
-                <a class="float-left btn btn-sm btn-danger mx-2" href="/logout">Logout</a>
-              
+                <li class="nav-item dropdown">
+                  <a class="float-left btn btn-sm btn-danger mx-2 dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Administrador</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{url_for('registrar')}}">Registrar</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('login')}}">Login</a></li>
+                    <li><a class="dropdown-item" href="/logout">logout</a></li>
+                  </ul>
+                </li>
             </div>
           </div>
         </nav>
